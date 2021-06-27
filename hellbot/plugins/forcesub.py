@@ -120,8 +120,8 @@ async def getfsub(event):
     await eor(event, f"**ForceSub Enabled ** :\n- {channel.title} `({all})`")
 
 
-@bot.on(hell_cmd(pattern="lsfsub$"))
-@bot.on(sudo_cmd(pattern="lsfsub$", allow_sudo=True))
+@bot.on(hell_cmd(pattern="allfsub$"))
+@bot.on(sudo_cmd(pattern="allfsub$", allow_sudo=True))
 async def list(event):
     channels = all_fsub()
     CHANNEL_LIST = "**🚀 Fsub Enabled In :**\n"
@@ -139,7 +139,7 @@ CmdHelp("forcesub").add_command(
 ).add_command(
   "chfsub", None, "Checks for the Status of Force Subscribe In The Chat."
 ).add_command(
-  "lsfsub", None, "Gives the list of all chats with force subscribe enabled."
+  "allfsub", None, "Gives the list of all chats with force subscribe enabled."
 ).add_warning(
   "✅ Harmless Module."
 ).add_info(
