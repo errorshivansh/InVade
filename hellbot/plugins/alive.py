@@ -38,7 +38,7 @@ def get_readable_time(seconds: int) -> str:
 
     return ping_time
 
-uptime = get_readable_time((time.time() - StartTime))
+# uptime = get_readable_time((time.time() - StartTime))
 #-------------------------------------------------------------------------------
 
 hell_pic = Config.ALIVE_PIC or "https://telegra.ph/file/ea9e11f7c9db21c1b8d5e.mp4"
