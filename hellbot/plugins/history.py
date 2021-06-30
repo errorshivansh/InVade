@@ -31,10 +31,22 @@ async def _(hellevent):
               await eod(hellevent, "Please unblock @Sangmatainfo_bot")
               return
           if response1.text.startswith("No records found"):
-             await eor(hellevent, "User never changed his Username...")
-          else: 
-             await hellevent.delete()
-             await hellevent.client.send_message(hellevent.chat_id, response2.message)
+             await eor(hellevent, "User never changed his Name...")
+
+          try:
+              if response1.text.startswith("Name History"):
+                  bhejde = response1
+          except:
+              pass
+
+          try:
+              if response2.text.startswith("Name History"):
+                  bhejde = response2
+          except:
+              pass
+
+          await hellevent.delete()
+          await hellevent.client.send_message(hellevent.chat_id, bhejde.message)
 
 
 @bot.on(hell_cmd(pattern="unh ?(.*)"))
