@@ -165,18 +165,34 @@ if Config.BOT_USERNAME is not None and tgbot is not None:
 
         elif event.query.user_id == bot.uid and query == "pm_warn":
             hel_l = HELL_FIRST.format(hell_mention, mssge)
-            result = builder.photo(
-                file=hell_pic,
-                text=hel_l,
-                buttons=[
-                    [
-                        custom.Button.inline("📝 Request 📝", data="req"),
-                        custom.Button.inline("💬 Chat 💬", data="chat"),
-                    ],
-                    [custom.Button.inline("🚫 Spam 🚫", data="heheboi")],
-                    [custom.Button.inline("Curious ❓", data="pmclick")],
-                ],
-            )
+            pm_btn = [
+                [custom.Button.inline("📝 Request 📝", data="req"),
+                custom.Button.inline("💬 Chat 💬", data="chat")],
+                [custom.Button.inline("🚫 Spam 🚫", data="heheboi")],
+                [custom.Button.inline("Curious ❓", data="pmclick")]
+            ]
+            if hell_pic and hell_pic.endswith((".jpg", ".png")):
+                result = builder.photo(
+                    hell_pic,
+                    text=hel_l,
+                    buttons=pm_btn,
+                    link_preview=False,
+                )
+            elif hell_pic:
+                result = builder.document(
+                    hell_pic,
+                    text=hel_l,
+                    title="HellBot PM Security",
+                    buttons=pm_btn,
+                    link_preview=False,
+                )
+            else:
+                result = builder.article(
+                    text=hel_l,
+                    title="HellBot PM Security",
+                    buttons=pm_btn,
+                    link_preview=False,
+                )
 
         elif event.query.user_id == bot.uid and query == "repo":
             result = builder.article(
