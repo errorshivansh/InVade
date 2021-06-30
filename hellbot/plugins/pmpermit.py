@@ -50,7 +50,7 @@ async def approve_p_m(event):
             pm_sql.disapprove(event.chat_id)
         await event.edit("Go fuck yourself !! \n\n**Blocked** [{}](tg://user?id={})".format(firstname, reply_s.sender_id))
         await event.client(functions.contacts.BlockRequest(reply_s.sender_id))
-        await asyncio.sleep(3)
+        await asyncio.sleep(10)
         await event.delete()
       
 
@@ -68,7 +68,7 @@ async def approve_p_m(event):
         firstname = replied_user.user.first_name
         await event.edit("Embrace yourself !! \n\n**Unblocked** [{}](tg://user?id={})".format(firstname, reply_s.sender_id))
         await event.client(functions.contacts.UnblockRequest(reply_s.sender_id))
-        await asyncio.sleep(3)
+        await asyncio.sleep(10)
         await event.delete()
 
 
