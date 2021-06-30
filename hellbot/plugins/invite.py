@@ -139,11 +139,26 @@ async def _(event):
                     await event.reply(str(e))
             await eod(event, "Added user to the chat..")
 
+@bot.on(hell_cmd(pattern="join (.*)"))
+@bot.on(sudo_cmd(pattern="join (.*)", allow_sudo=True))
+async def _(event):
+    if event.fwd_from:
+        return
+    hel_ = event.pattern_match.group(1)
+    hell = await eor(event, f"Trying to join {hel_}")
+    try:
+        await bot(functions.channels.JoinChannelRequest(channel=hel_))
+        await eod(hell, f"Succesfully Joined {hel_}")
+    except Exception as e:
+        await hell.edit(str(e))
+
 
 CmdHelp("invite").add_command(
   "add", "<username/id>", "Adds the given user to the group"
 ).add_command(
   "inviteall", "<group username>", "Scraps user from the targeted group to your group. Basically Kidnapps user from one chat to another"
+).add_command(
+  "join", "<group/channel username>", "Joins the mentioned channel or group."
 ).add_info(
   "Invite them."
 ).add_warning(
