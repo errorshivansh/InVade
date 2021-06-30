@@ -7,7 +7,7 @@ from hellbot.random_strings import *
 from hellbot.version import __hell__
 from telethon import version
 
-
+uptime = f"{str(datetime.datetime.now() - StartTime).split('.')[0]}"
 HELL_USER = bot.me.first_name
 ForGo10God = bot.uid
 hell_mention = f"[{HELL_USER}](tg://user?id={ForGo10God})"
