@@ -40,3 +40,8 @@ def rm_fsub(chat_id):
     if rem:
         SESSION.delete(rem)
         SESSION.commit()
+
+def all_fsub():
+    rem = SESSION.query(forceSubscribe).all()
+    SESSION.close()
+    return rem
