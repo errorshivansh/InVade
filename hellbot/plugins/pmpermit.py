@@ -22,6 +22,7 @@ HELL_FIRST = (
 )
 
 @bot.on(hell_cmd(pattern="block$"))
+@bot.on(sudo_cmd(pattern="block$", allow_sudo=True))
 async def approve_p_m(event):
     if event.fwd_from:
         return
@@ -51,8 +52,26 @@ async def approve_p_m(event):
         await event.client(functions.contacts.BlockRequest(reply_s.sender_id))
         await asyncio.sleep(3)
         await event.delete()
-        
-        
+      
+
+@bot.on(hell_cmd(pattern="unblock$"))
+@bot.on(sudo_cmd(pattern="unblock$", allow_sudo=True))
+async def approve_p_m(event):
+    if event.fwd_from:
+        return
+    if event.is_group:
+        reply_s = await event.get_reply_message()
+        if not reply_s:
+            await eod(event, "Reply to someone to unblock them..")
+            return
+        replied_user = await event.client(GetFullUserRequest(reply_s.sender_id))
+        firstname = replied_user.user.first_name
+        await event.edit("Go fuck yourself !! \n\n**Blocked** [{}](tg://user?id={})".format(firstname, reply_s.sender_id))
+        await event.client(functions.contacts.UnblockRequest(reply_s.sender_id))
+        await asyncio.sleep(3)
+        await event.delete()
+
+
 if PM_ON_OFF != "DISABLE":
     @bot.on(events.NewMessage(outgoing=True))
     async def auto_approve_for_out_going(event):
