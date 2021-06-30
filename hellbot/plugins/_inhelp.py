@@ -16,7 +16,6 @@ from telethon.tl.functions.channels import JoinChannelRequest
 from telethon.tl.functions.messages import ExportChatInviteRequest
 
 from . import *
-from .alive import uptime
 
 hell_row = Config.BUTTONS_IN_HELP
 hell_emoji = Config.EMOJI_IN_HELP
