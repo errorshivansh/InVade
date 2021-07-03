@@ -145,7 +145,7 @@ async def _(event):
     if event.fwd_from:
         return
     reply_message = await event.get_reply_message()
-    await event.edit("Downloading Profile Picture to my local ...")
+    hel_ = await eor(event, "Downloading media...")
     if not os.path.isdir(Config.TMP_DOWNLOAD_DIRECTORY):
         os.makedirs(Config.TMP_DOWNLOAD_DIRECTORY)
     photo = None
@@ -154,21 +154,31 @@ async def _(event):
             reply_message, Config.TMP_DOWNLOAD_DIRECTORY
         )
     except Exception as e:
-        await event.edit(str(e))
+        await hel_.edit(str(e))
     else:
         if photo:
-            await event.edit("now, Uploading to @Telegram ...")
-            file = await bot.upload_file(photo)
+            await hel_.edit("📤 Uploading profile photo...")
+            if photo.endswith((".mp4", ".MP4")):
+                size = os.stat(photo).st_size
+                if size > 2097152:
+                    await hel_.edit("**ERROR !**\nSize exceeds Telegram Limit of 2MB !!")
+                    os.remove(photo)
+                    return
+                pic = None
+                vid = await event.client.upload_file(photo)
+            else:
+                pic = await event.client.upload_file(photo)
+                vid = None
             try:
                 await bot(
                     functions.photos.UploadProfilePhotoRequest(
-                        file
+                        file=pic, video=vid, video_start_ts=0.01
                     )
                 )
             except Exception as e:
-                await event.edit(str(e))
+                await hel_.edit(f"**Error !**\n`{str(e)}`")
             else:
-                await eod(event, PP_CHANGED)
+                await eod(hel_, PP_CHANGED)
     try:
         os.remove(photo)
     except Exception as e:
