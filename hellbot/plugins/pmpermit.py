@@ -268,7 +268,7 @@ if PM_ON_OFF != "DISABLE":
                 pass
         
         botusername = Config.BOT_USERNAME
-        tap = await bot.inline_query(botusername, "pm_warn")
+        tap = await event.client.inline_query(botusername, "pm_warn")
         hel_ = await tap[0].click(event.chat_id)
         PM_WARNS[chat_ids] += 1
         if chat_ids in PREV_REPLY_MESSAGE:
