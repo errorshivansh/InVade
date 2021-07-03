@@ -26,15 +26,16 @@ HELL_FIRST = (
 async def approve_p_m(event):
     if event.fwd_from:
         return
+    hel_ = await eor(event, "`Blocking...`")
     if event.is_private:
         replied_user = await event.client(GetFullUserRequest(await event.get_input_chat()))
         firstname = replied_user.user.first_name
         if str(event.chat_id) in DEVLIST:
-            await event.edit("**I can't block my creator !!**")
+            await hel_.edit("**I can't block my creator !!**")
             return
         if pm_sql.is_approved(event.chat_id):
             pm_sql.disapprove(event.chat_id)
-        await event.edit("Go Get Some Sleep Retard !! \n\n**Blocked** [{}](tg://user?id={})".format(firstname, event.chat_id))
+        await hel_.edit("Go Get Some Sleep Retard !! \n\n**Blocked** [{}](tg://user?id={})".format(firstname, event.chat_id))
         await event.client(functions.contacts.BlockRequest(event.chat_id))
     elif event.is_group:
         reply_s = await event.get_reply_message()
@@ -44,11 +45,11 @@ async def approve_p_m(event):
         replied_user = await event.client(GetFullUserRequest(reply_s.sender_id))
         firstname = replied_user.user.first_name
         if str(reply_s.sender_id) in DEVLIST:
-            await event.edit("**I can't Block My Creator !!**")
+            await hel_.edit("**I can't Block My Creator !!**")
             return
         if pm_sql.is_approved(event.chat_id):
             pm_sql.disapprove(event.chat_id)
-        await event.edit("Go fuck yourself !! \n\n**Blocked** [{}](tg://user?id={})".format(firstname, reply_s.sender_id))
+        await hel_.edit("Go fuck yourself !! \n\n**Blocked** [{}](tg://user?id={})".format(firstname, reply_s.sender_id))
         await event.client(functions.contacts.BlockRequest(reply_s.sender_id))
         await asyncio.sleep(10)
         await event.delete()
@@ -59,14 +60,15 @@ async def approve_p_m(event):
 async def approve_p_m(event):
     if event.fwd_from:
         return
+    hel_ = await eor(event, "`Unblocking...`")
     if event.is_group:
         reply_s = await event.get_reply_message()
         if not reply_s:
-            await eod(event, "Reply to someone to unblock them..")
+            await eod(hel_, "Reply to someone to unblock them..")
             return
         replied_user = await event.client(GetFullUserRequest(reply_s.sender_id))
         firstname = replied_user.user.first_name
-        await event.edit("Embrace yourself !! \n\n**Unblocked** [{}](tg://user?id={})".format(firstname, reply_s.sender_id))
+        await hel_.edit("Embrace yourself !! \n\n**Unblocked** [{}](tg://user?id={})".format(firstname, reply_s.sender_id))
         await event.client(functions.contacts.UnblockRequest(reply_s.sender_id))
         await asyncio.sleep(10)
         await event.delete()
