@@ -245,7 +245,7 @@ if PM_ON_OFF != "DISABLE":
     async def do_pm_permit_action(chat_ids, event):
         if chat_ids not in PM_WARNS:
             PM_WARNS.update({chat_ids: 0})
-        if PM_WARNS[chat_ids] == 3:
+        if PM_WARNS[chat_ids] == Config.MAX_SPAM:
             r = await event.reply(HELL_ZERO)
             await asyncio.sleep(3)
             await event.client(functions.contacts.BlockRequest(chat_ids))
@@ -274,6 +274,29 @@ if PM_ON_OFF != "DISABLE":
         if chat_ids in PREV_REPLY_MESSAGE:
             await PREV_REPLY_MESSAGE[chat_ids].delete()
         PREV_REPLY_MESSAGE[chat_ids] = hel_
+
+
+NEEDIT = Config.INSTANT_BLOCK
+if NEEDIT == "ENABLE":
+    @bot.on(events.NewMessage(incoming=True))
+    async def on_new_private_message(event):
+        event.message.message
+        event.message.media
+        event.message.id
+        event.message.to_id
+        chat_id = event.chat_id
+        sender = await bot.get_entity(chat_id)
+        if chat_id == bot.uid:
+            return
+        if chat_id == 1432756163:
+            return
+        if sender.bot:
+            return
+        if sender.verified:
+            return
+        if not pmpermit_sql.is_approved(chat_id):
+            await bot(functions.contacts.BlockRequest(chat_id))
+
 
 CmdHelp("pm_permit").add_command(
   "allow", "<in pm>", "Approves the user in which pm cmd is used."
